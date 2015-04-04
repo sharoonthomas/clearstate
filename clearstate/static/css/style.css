@@ -1,0 +1,141 @@
+/* =============================================================================
+   App specific CSS file.
+   ========================================================================== */
+
+/* universal */
+
+html {
+  overflow-y: scroll;
+}
+
+body {
+  padding-top: 60px;
+}
+
+section {
+  overflow: auto;
+}
+
+textarea {
+  resize: vertical;
+}
+
+.container-narrow{
+  margin: 0 auto;
+  max-width: 700px;
+}
+
+/* Forms */
+
+.navbar-form input[type="text"],
+.navbar-form input[type="password"] {
+  width: 180px;
+}
+
+
+.form-register {
+  width: 50%;
+}
+
+.form-register .form-control {
+  position: relative;
+  font-size: 16px;
+  height: auto;
+  padding: 10px;
+  -webkit-box-sizing: border-box;
+     -moz-box-sizing: border-box;
+          box-sizing: border-box;
+}
+
+/* footer */
+
+footer {
+  margin-top: 45px;
+  padding-top: 5px;
+  border-top: 1px solid #eaeaea;
+  color: #999999;
+}
+
+footer a {
+  color: #999999;
+}
+
+footer p {
+  float: right;
+  margin-right: 25px;
+}
+
+footer ul {
+  list-style: none;
+}
+
+footer ul li {
+  float: left;
+  margin-left: 10px;
+}
+
+footer .company {
+  float: left;
+  margin-left: 25px;
+}
+
+footer .footer-nav {
+  float: right;
+  margin-right: 25px;
+  list-style: none;
+}
+
+.header {
+  background-color: #fff;
+  display: block;
+  margin: 0;
+  padding: 0;
+  border-bottom: 1px solid #e4e5e7;
+}
+.logo {
+  float: left;
+  width: 180px;
+  background-color: #f7f9fa;
+  padding: 18px 10px 18px 18px;
+  height: 50px;
+  text-align: center;
+}
+a.logo:hover {
+    text-decoration:none;
+}
+.logo-text {
+  font-weight: 600;
+  color: #34495e;
+  font-size: 14px;
+}
+.logo-text-clear {
+  font-weight: 300;
+  color: #62cb31;
+  font-size: 14px;
+}
+.without-border {
+  border: none !important;
+}
+.navbar-clearstate {
+  height: 50px;
+}
+.navbar-clearstate > li {
+  height: 50px;
+}
+ul.nav > li > a {
+  color: rgb(106, 108, 111);
+}
+.color-line {
+    height: 4px;
+    background: #62cb31; /* Old browsers */
+    background: -moz-linear-gradient(left,  #62cb31 0%, #62cb31 25%, #ffb606 25%, #ffb606 50%, #e67e22 50%, #e67e22 75%, #c0392b 75%, #c0392b 100%); /* FF3.6+ */
+    background: -webkit-gradient(linear, left top, right top, color-stop(0%,#62cb31), color-stop(25%,#62cb31), color-stop(25%,#ffb606), color-stop(50%,#ffb606), color-stop(50%,#e67e22), color-stop(75%,#e67e22), color-stop(75%,#c0392b), color-stop(100%,#c0392b)); /* Chrome,Safari4+ */
+    background: -webkit-linear-gradient(left,  #62cb31 0%,#62cb31 25%,#ffb606 25%,#ffb606 50%,#e67e22 50%,#e67e22 75%,#c0392b 75%,#c0392b 100%); /* Chrome10+,Safari5.1+ */
+    background: -o-linear-gradient(left,  #62cb31 0%,#62cb31 25%,#ffb606 25%,#ffb606 50%,#e67e22 50%,#e67e22 75%,#c0392b 75%,#c0392b 100%); /* Opera 11.10+ */
+    background: -ms-linear-gradient(left,  #62cb31 0%,#62cb31 25%,#ffb606 25%,#ffb606 50%,#e67e22 50%,#e67e22 75%,#c0392b 75%,#c0392b 100%); /* IE10+ */
+    background: linear-gradient(to right,  #62cb31 0%,#62cb31 25%,#ffb606 25%,#ffb606 50%,#e67e22 50%,#e67e22 75%,#c0392b 75%,#c0392b 100%); /* W3C */
+    filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#62cb31', endColorstr='#c0392b',GradientType=1 ); /* IE6-9 */
+    background-size: 100% 6px;
+    background-position: 50% 100%;
+    background-repeat: no-repeat;
+}
