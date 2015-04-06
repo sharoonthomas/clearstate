@@ -15,6 +15,12 @@
     </a>
   </div>
 
+  {#% if page %}
+    <span class="navbar-title font-slim">
+      {{ page.name }}
+    </span>
+  {% endif %#}
+
   <div class="navbar-right">
     <ul class="nav navbar-nav navbar-clearstate without-border">
       <li class="active">

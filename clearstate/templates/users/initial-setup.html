@@ -1,29 +1,34 @@
-{% extends "layout.html" %}
-
-{# Keep the nav block empty #}
-{#{% block nav %}{% endblock nav %}#}
+{% extends "admin-layout.html" %}
 
 {% block content %}
-<div class="container">
-  <h4 class="text-center">Setup Clear State</h4>
+<div class="container-narrow ">
   <br/>
-  <form id="registerForm" class="form form-register form-horizontal" method="POST" action="" role="form">
+  <h3 class="text-center">
+    Clear State Setup<br/>
+    <small>Create an administration user</small>
+  </h3>
+  <form id="registerForm" class="form form-half-width form-clearstate center-block form-horizontal" method="POST" action="" role="form">
+          <hr/>
           {{ form.hidden_tag() }}
           <div class="form-group">
+              {{form.full_name.label}}
+              {{form.full_name(placeholder="John Doe", class_="form-control simplebox")}}
+          </div>          
+          <div class="form-group">
               {{form.email.label}}
-              {{form.email(placeholder="Email", class_="form-control")}}
+              {{form.email(placeholder="Email", class_="form-control simplebox")}}
           </div>
           <div class="form-group">
               {{form.password.label}}
-              {{form.password(placeholder="Password", class_="form-control")}}
+              {{form.password(placeholder="Password", class_="form-control simplebox")}}
           </div>
           <div class="form-group">
               {{form.confirm.label}}
-              {{form.confirm(placeholder="Password (again)", class_="form-control")}}
+              {{form.confirm(placeholder="Password (again)", class_="form-control simplebox")}}
           </div>
-          <p><input class="btn btn-default btn-submit" type="submit" value="Register"></p>
+          <p>
+            <input class="btn btn-lg btn-success btn-block btn-submit" type="submit" value="Register">
+          </p>
   </form>
 </div>
 {% endblock %}
-
-

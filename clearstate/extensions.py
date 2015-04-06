@@ -22,3 +22,15 @@ cache = Cache()
 
 from flask.ext.debugtoolbar import DebugToolbarExtension
 debug_toolbar = DebugToolbarExtension()
+
+
+from flask.ext.gravatar import Gravatar
+gravatar = Gravatar(
+    size=100,
+    rating='g',
+    default='retro',
+    force_default=False,
+    force_lower=False,
+    use_ssl=True,
+    base_url=None
+)

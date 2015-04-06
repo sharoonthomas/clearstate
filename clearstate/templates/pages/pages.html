@@ -1,0 +1,105 @@
+{% extends 'pages/admin-layout.html' %}
+
+
+{% macro create_page_form() %}
+<form id="registerForm" class="form form-half-width form-clearstate form-register" method="POST" action="" role="form">
+  {{ form.hidden_tag() }}
+  <div class="form-group">
+      {{form.name.label}}
+      {{form.name(placeholder="My Product Status Page", class_="form-control")}}
+  </div>
+  <div class="form-group">
+      {{form.site_url.label}}
+      {{form.site_url(placeholder="status.mycompany.com", class_="form-control")}}
+  </div>
+  <div class="form-group">
+      {{form.timezone.label}}
+      {{form.timezone(class_="form-control")}}
+  </div>
+  <div class="form-group">
+      {{form.about_page.label}}
+      {{form.about_page(class_="form-control")}}
+  </div>                  
+  <p><input class="btn btn-success btn-lg btn-submit" type="submit" value="Register"></p>
+</form>  
+{% endmacro %}
+
+
+{% block breadcrumb_title %}
+{% if pages %}
+  <i class="fa fa-th-large"></i> Pages
+{% else %}
+  <h2>Status Pages</h2>
+  <p>You haven't created any status pages yet. Create your first status page!</p>
+{% endif %}
+{% endblock breadcrumb_title %}
+
+
+{% block breadcrumbs %}
+  {{ super() }}
+  {% if not pages %}
+  <li class="active">
+      <span>New Page</span>
+  </li>
+  {% endif %}
+{% endblock breadcrumbs %}
+
+
+{% block page_content %}
+  {% if pages %}
+    {% for page in pages %}
+    <div class="col-lg-6">
+      <div class="panel panel-success">
+        <div class="panel-body">
+          <div class="row">
+            <div class="col-sm-7">
+              <h4 class="panel-project-title">
+                <a href="{{ url_for('pages.dashboard', page_id=page.id) }}">
+                  {{ page.name }}
+                </a>
+              </h4>
+              <p>{{ page.about_page }}</p>
+
+              <div class="row">
+                <div class="col-sm-3">
+                  <div class="project-label">Incidents</div>
+                  <small class="text-center">{{ page.open_incident_count }} / {{ page.incident_count }}</small>
+                </div>
+                <div class="col-sm-3">
+                  <div class="project-label">Components</div>
+                  <small>{{ page.component_count }}</small>
+                </div>
+                <div class="col-sm-3">
+                  <div class="project-label">Metrics</div>
+                  <small></small>
+                </div>                
+              </div>
+            </div>
+
+            <div class="col-sm-5">
+                <div class="btn-group pull-right">
+                    <button class="btn btn-xs btn-default"> 
+                      <i class="fa fa-eye"></i> View
+                    </button>
+                    <button class="btn btn-xs btn-default">
+                      <i class="fa fa-pencil"></i> Edit
+                    </button>
+                    <button class="btn btn-xs btn-default"> 
+                      <i class="fa fa-trash-o"></i> Delete
+                    </button>
+                </div>
+            </div>
+                </div>
+            </div>
+            <div class="panel-footer">
+                Additional information about project in footer
+            </div>
+        </div>
+    </div>      
+    {% endfor %}
+  {% else %}
+    <div class="col-md-12">
+      {{ create_page_form() }}
+    </div>
+  {% endif %}
+{% endblock page_content %}

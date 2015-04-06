@@ -1,0 +1,26 @@
+{% extends 'pages/components.html' %}
+
+{% block breadcrumb_title %}
+{{ super() }} &gt; Add Component Group
+{% endblock breadcrumb_title %}
+
+
+{% block header_button_bar %}
+{% endblock header_button_bar %}
+
+
+{% block page_content %}
+<div class="col-md-12">
+  <form id="create-component-form" 
+    class="form form-half-width form-clearstate center-block form-horizontal" 
+    method="POST" action="" role="form">
+    {{ form.hidden_tag() }}
+    <div class="form-group">
+      {{form.name.label}}
+      {{form.name(placeholder="Ex. Applications, Internal Services", class_="form-control")}}
+    </div>
+    <button type="submit" class="btn btn-success">Add Component Group</button>
+  </form>
+</div>
+{% endblock page_content %}
+

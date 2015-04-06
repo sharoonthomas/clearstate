@@ -1,0 +1,57 @@
+{% extends 'pages/admin-layout.html' %}
+
+{#
+
+This is the admin part of the status page, not the public view.
+
+#}
+
+{% block breadcrumb_title %}
+  <i class="fa fa-dashboard"></i> Dashboard
+{% endblock breadcrumb_title %}
+
+
+{% block breadcrumbs %}
+  {{ super() }}
+  <li class="active">
+      <span>Dashboard</span>
+  </li>
+{% endblock breadcrumbs %}
+
+
+{% block page_content %}
+<div class="col-md-12">
+  <table class="table ">
+  {% for group, components in page.components_by_group() %}
+    <tr class="active">
+      <td colspan="8">
+        {{ group and group.name or 'No Group' }}
+      </td>
+    </tr>
+    {% for component in components %}
+      <tr>
+        <td colspan="4">
+          <span class="component-name">{{ component.name }}</span>
+          <br/>{{ component.description or 'No Description' }}
+        </td>
+        {% for status in component.status_map.keys() %}
+        <td>
+          <label class="component-status">
+            <input type="radio" name="{{ component.id }}" 
+            value="{{ status }}"
+            {% if status == component.status %}checked{% endif %}>
+            {{ status }}
+          </label>          
+        </td>
+        {% endfor %}
+      </tr>
+    {% endfor %}        
+  {% endfor %}
+  </table>      
+  {% if not page.components %}
+  <div class="center-block">
+    <h4 class="text-center">You haven't created any components yet!</h4> 
+  </div>
+  {% endif %}
+</div>
+{% endblock page_content %}

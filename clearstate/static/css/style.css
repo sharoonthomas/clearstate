@@ -8,8 +8,15 @@ html {
   overflow-y: scroll;
 }
 
+
 body {
+  font-family: "Open Sans","Helvetica Neue",Helvetica,Arial,sans-serif;
+  background-color: #fff;
+  font-size: 13px;
+  color: #6a6c6f;
+  margin: 0;
   padding-top: 60px;
+  height: 100%;
 }
 
 section {
@@ -33,14 +40,13 @@ textarea {
 }
 
 
-.form-register {
+.form-half-width {
   width: 50%;
 }
 
-.form-register .form-control {
+.form-half-width .form-control {
   position: relative;
   font-size: 16px;
-  height: auto;
   padding: 10px;
   -webkit-box-sizing: border-box;
      -moz-box-sizing: border-box;
@@ -50,10 +56,11 @@ textarea {
 /* footer */
 
 footer {
-  margin-top: 45px;
-  padding-top: 5px;
-  border-top: 1px solid #eaeaea;
-  color: #999999;
+  position: absolute;
+  bottom: 0;
+  width: 100%;
+  height: 40px;
+  background-color: #f5f5f5;
 }
 
 footer a {
@@ -67,22 +74,7 @@ footer p {
 
 footer ul {
   list-style: none;
-}
-
-footer ul li {
-  float: left;
-  margin-left: 10px;
-}
-
-footer .company {
-  float: left;
-  margin-left: 25px;
-}
-
-footer .footer-nav {
-  float: right;
-  margin-right: 25px;
-  list-style: none;
+  margin-top: 10px;
 }
 
 .header {
@@ -122,6 +114,12 @@ a.logo:hover {
 .navbar-clearstate > li {
   height: 50px;
 }
+.navbar-title {
+  font-size: 22px;
+  padding-left: 7px;
+  padding-top: 7px;
+  display: inline-block;
+}
 ul.nav > li > a {
   color: rgb(106, 108, 111);
 }
@@ -138,4 +136,126 @@ ul.nav > li > a {
     background-size: 100% 6px;
     background-position: 50% 100%;
     background-repeat: no-repeat;
+}
+
+form.form-clearstate input {
+  outline: none !important;
+  border-color: #e4e5e7 !important;
+  -webkit-box-shadow: none !important;
+  -moz-box-shadow: none !important;
+  box-shadow: none !important;
+}
+form.form-clearstate input:focus {
+  border-color: #62cb31 !important;
+}
+form.form-clearstate select {
+  outline: none !important;
+  border-color: #e4e5e7 !important;
+  -webkit-box-shadow: none !important;
+  -moz-box-shadow: none !important;
+  box-shadow: none !important;
+}
+form.form-clearstate select:focus {
+  border-color: #62cb31 !important;
+}
+form.form-clearstate textarea {
+  outline: none !important;
+  border-color: #e4e5e7 !important;
+  -webkit-box-shadow: none !important;
+  -moz-box-shadow: none !important;
+  box-shadow: none !important;
+}
+form.form-clearstate textarea:focus {
+  border-color: #62cb31 !important;
+}
+
+.admin-content-wrapper {
+    margin-top: -5px;
+    min-height: 100%;
+}
+.left-menu {
+  width: 180px;
+  bottom: 0;
+  float: left;
+  left: 0;
+  position: absolute;
+  top: 54px;
+  border-right: 1px solid #e4e5e7;
+  transition: all 0.4s ease 0s;
+  background-color: #f7f9fa;
+}
+.content-when-menu {
+  margin: 0px 0 0 185px;
+  padding: 0 0 0 10px;
+  transition: all 0.4s ease 0s;
+  position: relative;
+  min-height: 100%;
+}
+.user-profile {
+    background-color: white;
+    padding-top: 10px;
+    padding-bottom: 20px;
+}
+.img-profile {
+    padding: 10px;
+}
+#left-menu-list {
+    overflow: scroll;
+}
+
+#left-menu-list  li a {
+    color: #6a6c6f;
+    font-weight: 500;
+    padding: 15px 20px
+}
+
+#left-menu-list  li {
+    border-bottom: 1px solid #e4e5e7
+}
+
+#left-menu-list  li:first-child {
+    border-top: 1px solid #e4e5e7
+}
+
+#left-menu-list  li.active a, #left-menu-list  li:hover a {
+    color: #34495e
+}
+
+#left-menu-list .nav > li > a:hover, #side-menu.nav > li > a:focus {
+    background: #fff
+}
+
+#left-menu-list li.active {
+    background: #fff
+}
+.panel-breadcrumb {
+  padding: 2px 0px;
+  margin-top: 6px;
+  margin-bottom: 0px;
+  list-style: none;
+  background-color: #fff;
+  border-radius: #fff;
+  font-size: 11px;
+}
+.font-slim {
+  font-weight: 300;
+}
+.no-top-padding {
+    padding-top: 0px;
+}
+.panel-project-title {
+    margin-top: 0px;
+}
+.panel-project-title > a, .panel-project-title > a:hover {
+    color: #6a6c6f;
+    text-decoration: none;
+}
+.component-name {
+  color: #34495e;
+  font-weight: 500;
+}
+.component-status {
+  color: #6a6c6f;
+  padding-top: 6px;
+  font-weight: 500;
 }

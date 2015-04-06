@@ -5,7 +5,8 @@ import datetime as dt
 import pytest
 
 from clearstate.user.models import User, Role
-from .factories import UserFactory
+from clearstate.page.models import Component
+from .factories import UserFactory, PageFactory
 
 
 @pytest.mark.usefixtures('db')
@@ -53,3 +54,33 @@ class TestUser:
         u.roles.append(role)
         u.save()
         assert role in u.roles
+
+
+@pytest.mark.usefixtures('db')
+class TestPage:
+
+    def test_factory(self, db):
+        page = PageFactory()
+        db.session.commit()
+
+        assert bool(page.name)
+        assert bool(page.site_url)
+        assert page.active is True
+        assert page.timezone == 'UTC'
+        assert page.component_groups == []
+        assert page.components == []
+
+    def test_component_count(self, db):
+        page = PageFactory()
+        page.save()
+
+        assert page.component_count == 0
+
+        for name in ['c1', 'c2', 'c3', 'c4']:
+            component = Component(
+                name=name,
+                page_id=page.id
+            )
+            component.save()
+
+        assert page.component_count == 4

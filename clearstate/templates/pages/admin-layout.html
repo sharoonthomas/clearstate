@@ -1,0 +1,99 @@
+{% extends 'admin-layout.html' %}
+
+
+{% block content %}
+{% if not current_user.is_anonymous() %}
+<div class="row admin-content-wrapper">
+    <div class="left-menu">
+      <div class="user-profile">
+        <img src="{{ current_user.email|gravatar(size=60) }}" 
+          class="img-responsive img-circle center-block img-profile"
+          alt="Profile Picture">
+          <h5 class="text-center">{{ current_user.full_name }}</h5>
+      </div>
+      {% if page %}
+      <ul class="nav" id="left-menu-list">
+        <li {% if request.path.endswith('/dashboard') %}class="active"{% endif %}>
+          <a href="{{ url_for('pages.dashboard', page_id=page.id) }}">
+            <span class="nav-label">
+              <i class="fa fa-dashboard"></i> Dashboard
+            </span>
+          </a>
+        </li>
+        <li>
+          <a href="analytics.html">
+            <span class="nav-label">
+              <i class="fa fa-comment"></i> Incidents
+            </span>
+            <span class="label label-success pull-right">
+              {{ page.incident_count }}
+            </span>
+          </a>
+        </li>
+        <li {% if request.path.find('/components') >= 0 %}class="active"{% endif %}> 
+          <a href="{{ url_for('pages.components', page_id=page.id) }}">
+            <span class="nav-label">
+              <i class="fa fa-puzzle-piece"></i> Components
+            </span>
+            <span class="label label-success pull-right">{{ page.component_count }}</span>
+          </a>
+        </li>
+        <li>
+          <a href="analytics.html">
+            <span class="nav-label">
+              <i class="fa fa-bar-chart"></i> Metrics
+            </span>
+            <span class="label label-warning pull-right">Coming Soon</span>
+          </a>
+        </li>        
+      </ul>
+      {% else %}
+      {# page independent settings #}
+      {% endif %}
+    </div>
+    <div class="content-when-menu">
+      <div class="row">
+        {% block page_header %}
+        <div class="panel no-top-padding">
+          <div class="panel-body no-top-padding">
+            <h2 class="font-slim ">
+              {% block breadcrumb_title %}
+              {% endblock breadcrumb_title %}
+            </h2>            
+            <div class="row">
+              <div class="col-md-6">
+                <ol class="panel-breadcrumb breadcrumb">
+                  {% block breadcrumbs %}
+                  <li>
+                    <a href="{{ url_for('pages.pages') }}">Pages</a>
+                  </li>
+                  {% if page %}
+                  <li>
+                    <a href="{{ url_for('pages.render_status_page', page_id=page.id) }}">{{ page.name }}</a></li>
+                  </li>
+                  {% endif %}
+                  {% endblock breadcrumbs %}
+                </ol>
+              </div>
+              <div class="col-md-6 pull-right">
+                <div class="btn-group pull-right">
+                  {% block header_button_bar %}
+                  {% endblock header_button_bar %}
+                </div> 
+              </div>
+            </div>
+          </div>
+        </div>
+        {% endblock page_header %}
+      </div>
+
+      <div class="row">
+        {% block page_content %}
+        {% endblock page_content %}
+      </div>
+    </div>
+</div>
+{% endif %}
+{% endblock content %}
+
+

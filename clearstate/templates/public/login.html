@@ -1,0 +1,26 @@
+{% extends "admin-layout.html" %}
+
+{% block content %}
+<div class="container-narrow ">
+  <br/>
+  <h3 class="text-center">
+    Login<br/>
+  </h3>
+  <form id="loginForm" class="form form-half-width center-block form-horizontal" method="POST" action="" role="form">
+          <hr/>
+          {{ form.hidden_tag() }}
+          <div class="form-group">
+              {{form.email.label}}
+              {{form.email(placeholder="Email", class_="form-control simplebox")}}
+          </div>
+          <div class="form-group">
+              {{form.password.label}}
+              {{form.password(placeholder="Password", class_="form-control simplebox")}}
+          </div>
+          <p>
+            <input class="btn btn-lg btn-success btn-block btn-submit" type="submit" value="Login">
+          </p>
+  </form>
+</div>
+{% endblock %}
+

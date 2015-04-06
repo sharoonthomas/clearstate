@@ -1,0 +1,52 @@
+{% extends 'pages/admin-layout.html' %}
+
+
+{% block breadcrumb_title %}
+Components
+{% endblock breadcrumb_title %}
+
+
+{% block breadcrumbs %}
+  {{ super() }}
+  <li class="active">
+      <span>Components</span>
+  </li>
+{% endblock breadcrumbs %}
+
+{% block header_button_bar %}
+  <a class="btn btn-sm btn-success"
+    href="{{ url_for('pages.add_component', page_id=page.id) }}"> 
+    <i class="fa fa-plus"></i> Add a Component
+  </a> 
+  <button type="button" class="btn btn-sm btn-success dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
+    <span class="caret"></span>
+    <span class="sr-only">Toggle Dropdown</span>
+  </button>
+  <ul class="dropdown-menu" role="menu">
+    <li><a href="{{ url_for('pages.add_component_group', page_id=page.id) }}">Add a Component Group</a></li>
+  </ul>
+
+{% endblock header_button_bar %}
+
+{% block page_content %}
+<div class="col-md-12">
+  {% for group, components in page.components_by_group() %}
+    <div class="list-group">
+      <a href="#" class="list-group-item  disabled">
+        {{ group and group.name or 'No Group' }}
+      </a>
+      {% for component in components %}
+      <a href="{{ url_for('pages.edit_component', component_id=component.id, page_id=page.id) }}" class="list-group-item">
+        <h4 class="">{{ component.name }}</h4>
+        <p class="list-group-item-text">{{ component.description }}</p>
+      </a>
+      {% endfor %}
+    </div>
+  {% endfor %}
+  {% if not page.components %}
+  <div class="center-block">
+    <h4 class="text-center">You haven't created any components yet!</h4> 
+  </div>
+  {% endif %}
+</div>
+{% endblock page_content %}

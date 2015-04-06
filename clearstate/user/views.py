@@ -1,7 +1,6 @@
 # -*- coding: utf-8 -*-
 from flask import Blueprint, render_template, redirect, url_for, current_app, \
      request, flash
-from werkzeug import abort
 from flask.ext.login import login_required, login_user
 
 from clearstate.user.forms import RegisterForm
@@ -42,17 +41,18 @@ def initial_setup():
         # Do not allow initial_setup to happen when users already exist
         # in the database.
         current_app.logger.info('Cannot run initial-setup when users exist.')
-        abort(403)
+        return redirect(url_for('public.login'))
 
     form = RegisterForm(request.form)
     if form.validate_on_submit():
         new_user = User.create(
+            full_name=form.full_name.data,
             email=form.email.data,
             password=form.password.data,
             active=True
         )
         login_user(new_user)
-        return redirect(url_for('page.initial_setup'))
+        return redirect(url_for('pages.pages'))
     else:
         flash_errors(form)
     return render_template('users/initial-setup.html', form=form)

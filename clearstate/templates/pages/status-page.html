@@ -1,5 +1,41 @@
-{% extends 'layout.html' %}
+{% extends 'pages/admin-layout.html' %}
 
-{% block body %}
-This is a status page
-{% endblock body %}
+{#
+
+This is the admin part of the status page, not the public view.
+
+#}
+
+{% block breadcrumb_title %}
+  Dashboard
+{% endblock breadcrumb_title %}
+
+
+{% block breadcrumbs %}
+  {{ super() }}
+  <li class="active">
+      <span>Dashboard</span>
+  </li>
+{% endblock breadcrumbs %}
+
+
+{% block page_content %}
+<div class="col-md-12">
+  <div class="list-group">
+    {% for group, components in page.components_by_group() %}
+      <a href="#" class="list-group-item list-group-item-heading disabled">
+        {{ group and group.name or '-' }}
+      </a>
+      {% for component in components %}
+      <a href="#" class="list-group-item">
+        <h4 class="list-group-item-heading">{{ component.name }}</h4>
+        <p class="list-group-item-text">{{ component.description }}</p>
+      </a>
+      {% endfor %}
+    {% endfor %}
+    {% if not page.components %}
+    
+    {% endif %}
+  </div>
+</div>
+{% endblock page_content %}

@@ -11,6 +11,7 @@ class TestRegisterForm:
     def test_validate_email_already_registered(self, user):
         # enters email that is already registered
         form = RegisterForm(
+            full_name="Jonathan Archer",
             email=user.email,
             password='example',
             confirm='example'
@@ -21,6 +22,7 @@ class TestRegisterForm:
 
     def test_validate_success(self, db):
         form = RegisterForm(
+            full_name="Jonathan Archer",
             email='new@test.test',
             password='example',
             confirm='example'
