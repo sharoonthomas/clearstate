@@ -9,3 +9,10 @@ python:
 install: pip install -r requirements/dev.txt
 
 script: py.test tests
+
+addons:
+  postgresql: "9.3"
+
+env:
+  global:
+    - SQLALCHEMY_DATABASE_URI=postgres://postgres@localhost/clearstate
