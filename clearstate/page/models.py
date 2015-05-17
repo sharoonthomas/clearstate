@@ -1,7 +1,10 @@
 # -*- coding: utf-8 -*-
+from datetime import datetime
 from itertools import groupby
 from collections import OrderedDict
 
+from dateutil.relativedelta import relativedelta
+import pytz
 from pytz import common_timezones
 from clearstate.database import (
     Column,
@@ -51,6 +54,34 @@ class Page(SurrogatePK, Model):
         return groupby(
             sorted(self.components, key=key), key=key
         )
+
+    @property
+    def effective_tz(self):
+        """
+        Returns the effective timezone.
+
+        UTC if no timezone is defined for the page.
+        """
+        return pytz.timezone(
+            self.timezone if self.timezone else 'UTC'
+        )
+
+    def get_incidents(self, till_date, days):
+        """
+        Returns an iterator that returns a date and incidents pair or
+        an empty list
+        """
+        for delta_days in range(days):
+            date = till_date - relativedelta(days=delta_days)
+            start_time = datetime.combine(date, datetime.min.time())
+            end_time = datetime.combine(date, datetime.max.time())
+
+            # XXX: Does timezone matter here ?
+            yield date, Incident.query.filter(
+                Incident.page_id == self.id,
+                Incident.create_time >= start_time,
+                Incident.create_time <= end_time,
+            ).all()
 
 
 class ComponentGroup(SurrogatePK, Model):

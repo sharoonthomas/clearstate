@@ -12,6 +12,7 @@ from clearstate.extensions import (
     migrate,
     debug_toolbar,
     gravatar,
+    babel,
 )
 from clearstate import public, user, page
 
@@ -40,6 +41,9 @@ def register_extensions(app):
     debug_toolbar.init_app(app)
     migrate.init_app(app, db)
     gravatar.init_app(app)
+
+    babel.init_app(app)
+    babel.timezoneselector(page.views.get_timezone_from_page)
     return None
 
 

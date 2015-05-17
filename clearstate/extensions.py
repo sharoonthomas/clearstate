@@ -34,3 +34,7 @@ gravatar = Gravatar(
     use_ssl=True,
     base_url=None
 )
+
+
+from flask.ext.babel import Babel
+babel = Babel()
