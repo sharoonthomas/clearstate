@@ -1,9 +1,24 @@
-===============================
 Clearstate - Status Page app in Python
-===============================
+======================================
 
 An open source status page app written in python Flask
 
+Features
+--------
+
+* Multiple Status Pages
+* Components (Eg. Chat service, Payment service)
+* Component Groups (Eg. Application Servers, Backend Servers)
+* Incidents
+
+Coming Soon
+-----------
+
+* Multiple users
+* Public Metrics
+* Public Metrics (from Pingdom, Librato, NewRelic)
+* End-User Notifications
+* Embed API
 
 Quickstart
 ----------
