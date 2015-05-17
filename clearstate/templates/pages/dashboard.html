@@ -19,6 +19,14 @@ This is the admin part of the status page, not the public view.
 {% endblock breadcrumbs %}
 
 
+{% block header_button_bar %}
+  <a class="btn btn-sm btn-success" target="new"
+    href="{{ url_for('pages.render_status_page', page_id=page.id) }}">
+    <i class="fa fa-external-link"></i> View Status Page
+  </a>
+{% endblock header_button_bar %}
+
+
 {% block page_content %}
 <div class="col-md-12">
   <table class="table ">
