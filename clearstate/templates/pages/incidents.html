@@ -1,0 +1,78 @@
+{% extends 'pages/admin-layout.html' %}
+
+
+{% block breadcrumb_title %}
+Incidents
+{% endblock breadcrumb_title %}
+
+
+{% block breadcrumbs %}
+  {{ super() }}
+  <li class="active">
+      <span>Incidents</span>
+  </li>
+{% endblock breadcrumbs %}
+
+{% block header_button_bar %}
+  <a class="btn btn-sm btn-success"
+    href="{{ url_for('pages.add_incident', page_id=page.id) }}"> 
+    <i class="fa fa-plus"></i> Add an Incident
+  </a> 
+  {#
+
+  Use this for scheduled maint.
+
+  <button type="button" class="btn btn-sm btn-success dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
+    <span class="caret"></span>
+    <span class="sr-only">Toggle Dropdown</span>
+  </button>
+  <ul class="dropdown-menu" role="menu">
+    <li><a href="{{ url_for('pages.add_component_group', page_id=page.id) }}">Add a Component Group</a></li>
+    #}
+  </ul>
+
+{% endblock header_button_bar %}
+
+
+{% block page_content %}
+<div class="col-md-12">
+  {% if not incidents.items %}
+  <div class="center-block">
+    <h4 class="text-center">
+      Congrats! You haven't had any incidents yet.
+    </h4> 
+  </div>
+  {% else %}
+    <div class="row">
+      <div class="col-md-12 incidents">
+        {% for incident in incidents.items %}
+          <div class="incident-block">
+            <div class="incident-icon">
+              <i class="fa {{ incident.icon }}"></i>
+            </div>
+            <div class="incident-content">
+              <div class="panel-heading">
+                <h4 class="panel-title font-slim">
+                  {{ incident.title }}
+                  <span class="pull-right">
+                    <small>{{ incident.create_time|datetimeformat('medium') }}</small>
+                  </span>
+
+                </h4>
+              </div>
+              <div class="panel-body">
+                {{ incident.description }}
+              </div>
+            </div>
+          </div>
+        {% endfor %}
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-md-6 col-xs-12 pull-right">
+        {{ render_pagination(incidents, 'pages.incidents', page) }} 
+      </div>
+    </div>
+  {% endif %}
+</div>
+{% endblock page_content %}

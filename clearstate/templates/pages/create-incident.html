@@ -1,0 +1,33 @@
+{% extends 'pages/incidents.html' %}
+
+{% block breadcrumb_title %}
+{{ super() }} &gt; Add
+{% endblock breadcrumb_title %}
+
+
+{% block header_button_bar %}
+{% endblock header_button_bar %}
+
+
+{% block page_content %}
+<div class="col-md-12">
+  <form id="create-component-form" 
+    class="form form-half-width form-clearstate center-block form-horizontal" 
+    method="POST" action="" role="form">
+    {{ form.hidden_tag() }}
+    <div class="form-group">
+      {{form.title.label}}
+      {{form.title(placeholder="Ex. Reports of latency", class_="form-control")}}
+    </div>
+    <div class="form-group">
+      {{form.type.label}}
+      {{form.type(class_="form-control")}}
+    </div>    
+    <div class="form-group">
+      {{form.description.label}}
+      {{form.description(placeholder="Detailed explanation", class_="form-control")}}
+    </div>
+    <button type="submit" class="btn btn-success">Add Incident</button>
+  </form>
+</div>
+{% endblock page_content %}
