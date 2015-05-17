@@ -169,6 +169,15 @@ form.form-clearstate textarea:focus {
   border-color: #62cb31 !important;
 }
 
+form.form-clearstate input::-webkit-input-placeholder { color: #e4e5e7; }
+form.form-clearstate input:-moz-placeholder { color: #e4e5e7; }
+form.form-clearstate input::-moz-placeholder { color: #e4e5e7; }
+form.form-clearstate input:-ms-input-placeholder { color: #e4e5e7; }
+form.form-clearstate textarea::-webkit-input-placeholder { color: #e4e5e7; }
+form.form-clearstate textarea:-moz-placeholder { color: #e4e5e7; }
+form.form-clearstate textarea::-moz-placeholder { color: #e4e5e7; }
+form.form-clearstate textarea:-ms-input-placeholder { color: #e4e5e7; }
+
 .admin-content-wrapper {
     margin-top: -5px;
     min-height: 100%;
@@ -258,4 +267,69 @@ form.form-clearstate textarea:focus {
   color: #6a6c6f;
   padding-top: 6px;
   font-weight: 500;
+}
+.incident-block {
+    padding-top: 10px;
+    padding-bottom: 10px;
+}
+.incident-icon {
+  top: 10;
+  border: 1px solid #e4e5e7;
+  text-align: center;
+  background: #fff;
+  position: absolute;
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  font-size: 16px;  
+}
+.incident-icon i {
+  display: block;
+  width: 24px;
+  height: 24px;
+  position: relative;
+  left: 50%;
+  top: 50%;
+  margin-left: -12px;
+  margin-top: -9px;
+}
+.incident-content {
+  position: relative;
+  margin-left: 60px;
+  background: white;
+  border-radius: 0.25em;
+  border: 1px solid #e4e5e7;
+}
+.incident-content:after, .incident-content:before {
+    right: 100%;
+    top: 20px;
+    border: solid transparent;
+    content: " ";
+    height: 0;
+    width: 0;
+    position: absolute;
+    pointer-events: none
+}
+
+.incident-content:after {
+    border-color: transparent;
+    border-right-color: #fff;
+    border-width: 10px;
+    margin-top: -10px
+}
+
+.incident-content:before {
+    border-color: transparent;
+    border-right-color: #e4e5e7;
+    border-width: 11px;
+    margin-top: -11px
+}
+.incidents::before {
+  content: '';
+  position: absolute;
+  top: 10px;
+  left: 33px;
+  height: 100%;
+  width: 4px;
+  background: #e3e8f0;
 }

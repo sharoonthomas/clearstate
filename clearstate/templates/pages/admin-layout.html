@@ -1,5 +1,21 @@
 {% extends 'admin-layout.html' %}
 
+{% macro render_pagination(pagination, endpoint, status_page) %}
+  <div class=pagination>
+  {%- for page_no in pagination.iter_pages() %}
+    {% if page_no %}
+      {% if page_no != pagination.page %}
+        <a href="{{ url_for(endpoint, page_no=page_no, page_id=status_page.id) }}">{{ page_no }}</a>
+      {% else %}
+        <strong>{{ page_no }}</strong>
+      {% endif %}
+    {% else %}
+      <span class=ellipsis>…</span>
+    {% endif %}
+  {%- endfor %}
+  </div>
+{% endmacro %}
+
 
 {% block content %}
 {% if not current_user.is_anonymous() %}
@@ -21,7 +37,7 @@
           </a>
         </li>
         <li>
-          <a href="analytics.html">
+          <a href="{{ url_for('pages.incidents', page_id=page.id) }}">
             <span class="nav-label">
               <i class="fa fa-comment"></i> Incidents
             </span>
@@ -69,7 +85,7 @@
                   </li>
                   {% if page %}
                   <li>
-                    <a href="{{ url_for('pages.render_status_page', page_id=page.id) }}">{{ page.name }}</a></li>
+                    <a href="{{ url_for('pages.dashboard', page_id=page.id) }}">{{ page.name }}</a></li>
                   </li>
                   {% endif %}
                   {% endblock breadcrumbs %}

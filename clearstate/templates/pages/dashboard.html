@@ -36,8 +36,8 @@ This is the admin part of the status page, not the public view.
         </td>
         {% for status in component.status_map.keys() %}
         <td>
-          <label class="component-status">
-            <input type="radio" name="{{ component.id }}" 
+          <label class="component-status status-{{ status|urlize }}">
+            <input type="radio" name="{{ component.id }}" class="status"
             value="{{ status }}"
             {% if status == component.status %}checked{% endif %}>
             {{ status }}
@@ -52,6 +52,33 @@ This is the admin part of the status page, not the public view.
   <div class="center-block">
     <h4 class="text-center">You haven't created any components yet!</h4> 
   </div>
+  <div class="text-center">
+    <a class="btn btn-sm btn-success"
+      href="{{ url_for('pages.add_component', page_id=page.id) }}"> 
+      <i class="fa fa-plus"></i> Add a Component
+    </a> 
+  </div>
   {% endif %}
 </div>
 {% endblock page_content %}
+
+
+{% block js %}
+  {{ super() }}
+  <script>
+    $(document).ready(function() {
+      $("input[type='radio']").change(function() {
+        url = "{{ url_for('pages.update_component_status', page_id=page.id) }}";
+        name = $(this).attr('name');
+        $.post(url, {
+          'component': name,
+          'status': $('input[name=' + name + ']:checked').val()
+        }, function(data) {
+          // success
+          toastr["success"]("component status has been updated!");
+        })
+        ;
+      })
+    });
+  </script>
+{% endblock js %}

@@ -3,7 +3,8 @@
 {% block content_class %}container{% endblock content_class %}
 
 {% block body %}
-<div class="header clearfix">
+<div class="container">
+  <div class="header clearfix">
         <nav>
           <ul class="nav nav-pills pull-right">
             <li role="presentation" class="active"><a href="#">Home</a></li>
@@ -44,7 +45,46 @@
         </div>
       </div>
 
-      <footer class="footer">
-        <p>&copy; Company 2014</p>
-      </footer>
+      <div class="row">
+        <div class="col-md-12">
+          <h3>Past Incidents</h3>
+          <hr/>
+          {% for date, incidents in incidents %}
+            <h4>{{ date|dateformat }}</h4>
+            {% if incidents %}
+              {% for incident in incidents %}
+                {{ render_incident(incident) }}
+              {% endfor %}
+            {% else %}
+              Nothing to report
+            {% endif %}
+            <hr/>
+          {% endfor %}
+        </div>
+      </div>
+
+    </div>
 {% endblock body %}
+
+
+{% macro render_incident(incident) %}
+<div class="incident-block">
+  <div class="incident-icon incident-{{ incident.type|lower }}">
+    <i class="fa {{ incident.icon }}"></i>
+  </div>
+  <div class="incident-content">
+    <div class="panel-heading">
+      <h4 class="panel-title font-slim">
+        {{ incident.title }}
+        <span class="pull-right">
+          <small>{{ incident.create_time|datetimeformat('medium') }}</small>
+        </span>
+
+      </h4>
+    </div>
+    <div class="panel-body">
+      {{ incident.description }}
+    </div>
+  </div>
+</div>  
+{% endmacro %}

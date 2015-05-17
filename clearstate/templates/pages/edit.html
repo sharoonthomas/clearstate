@@ -1,17 +1,8 @@
-{% extends 'pages/admin-layout.html' %}
-
+{% extends 'pages/pages.html' %}
 
 {% block breadcrumb_title %}
-  <i class="fa fa-th-large"></i> Pages &gt; New
+{{ super() }} &gt; Edit
 {% endblock breadcrumb_title %}
-
-
-{% block breadcrumbs %}
-  {{ super() }}
-  <li class="active">
-      <span>New Page</span>
-  </li>
-{% endblock breadcrumbs %}
 
 
 {% block header_button_bar %}
@@ -20,7 +11,7 @@
 
 {% block page_content %}
 <div class="col-md-12">
-  <form id="create-page-form" class="form form-half-width form-clearstate form-register" method="POST" action="" role="form">
+  <form id="update-page-form" class="form form-half-width form-clearstate form-register" method="POST" action="" role="form">
     {{ form.hidden_tag() }}
     <div class="form-group">
         {{form.name.label}}
@@ -38,7 +29,8 @@
         {{form.about_page.label}}
         {{form.about_page(class_="form-control")}}
     </div>                  
-    <p><input class="btn btn-success btn-lg btn-submit" type="submit" value="Register"></p>
+    <p><input class="btn btn-success btn-lg btn-submit" type="submit" value="Update Page"></p>
   </form>  
 </div>
 {% endblock page_content %}
+

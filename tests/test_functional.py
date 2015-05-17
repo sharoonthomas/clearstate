@@ -8,7 +8,7 @@ from flask import url_for
 
 
 from clearstate.user.models import User
-from .factories import UserFactory
+from clearstate.page.models import Page
 
 
 class TestLoggingIn:
@@ -90,3 +90,32 @@ class TestRegistering:
         res = form.submit()
         # sees error message
         assert "Passwords must match" in res
+
+
+class TestPage:
+
+    def test_deletion(self, user, page, testapp):
+        res = testapp.post(
+            '/login',
+            {
+                'email': user.email,
+                'password': 'myprecious',
+            }
+        )
+
+        delete_url = '/pages/%d/delete' % page.id
+        res = testapp.get(delete_url)
+
+        # Fill form with wrong name
+        form = res.forms['delete-page-form']
+        form['name'] = 'not-page-name'
+        res = form.submit()
+        assert 'Name should match the page name' in res
+
+        res = testapp.get(delete_url)
+        # Fill with correct name
+        form = res.forms['delete-page-form']
+        form['name'] = page.name
+        res = form.submit().follow()
+
+        assert Page.query.count() == 0

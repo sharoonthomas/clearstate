@@ -9,7 +9,8 @@ from clearstate.settings import TestConfig
 from clearstate.app import create_app
 from clearstate.database import db as _db
 
-from .factories import UserFactory
+from .factories import UserFactory, PageFactory
+
 
 @pytest.yield_fixture(scope='function')
 def app():
@@ -21,10 +22,12 @@ def app():
 
     ctx.pop()
 
+
 @pytest.fixture(scope='session')
 def testapp(app):
     """A Webtest app."""
     return TestApp(app)
+
 
 @pytest.yield_fixture(scope='function')
 def db(app):
@@ -42,3 +45,10 @@ def user(db):
     user = UserFactory(password='myprecious')
     db.session.commit()
     return user
+
+
+@pytest.fixture
+def page(db):
+    page = PageFactory()
+    db.session.commit()
+    return page

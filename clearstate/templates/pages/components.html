@@ -13,6 +13,7 @@ Components
   </li>
 {% endblock breadcrumbs %}
 
+
 {% block header_button_bar %}
   <a class="btn btn-sm btn-success"
     href="{{ url_for('pages.add_component', page_id=page.id) }}"> 
@@ -25,8 +26,8 @@ Components
   <ul class="dropdown-menu" role="menu">
     <li><a href="{{ url_for('pages.add_component_group', page_id=page.id) }}">Add a Component Group</a></li>
   </ul>
-
 {% endblock header_button_bar %}
+
 
 {% block page_content %}
 <div class="col-md-12">
@@ -37,7 +38,7 @@ Components
       </a>
       {% for component in components %}
       <a href="{{ url_for('pages.edit_component', component_id=component.id, page_id=page.id) }}" class="list-group-item">
-        <h4 class="">{{ component.name }}</h4>
+        <h4 class="font-slim">{{ component.name }}</h4>
         <p class="list-group-item-text">{{ component.description }}</p>
       </a>
       {% endfor %}

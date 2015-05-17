@@ -1,8 +1,17 @@
-{% extends 'pages/components.html' %}
+{% extends 'pages/admin-layout.html' %}
+
 
 {% block breadcrumb_title %}
-{{ super() }} &gt; Add
+  Page &gt; Delete
 {% endblock breadcrumb_title %}
+
+
+{% block breadcrumbs %}
+  {{ super() }}
+  <li class="active">
+      <span>Pages</span>
+  </li>
+{% endblock breadcrumbs %}
 
 
 {% block header_button_bar %}
@@ -11,15 +20,14 @@
 
 {% block page_content %}
 <div class="col-md-12">
-  <form id="create-component-form" 
+  <form id="delete-page-form" 
     class="form form-half-width form-clearstate center-block form-horizontal" 
     method="POST" action="" role="form">
     {{ form.hidden_tag() }}
     <div class="form-group">
-      {{form.name.label}}
-      {{form.name(placeholder="Ex. Applications, Internal Services", class_="form-control")}}
+      {{form.name(placeholder="Type the name of the page", class_="form-control")}}
     </div>
-    <button type="submit" class="btn btn-success">Add Component Group</button>
+    <button type="submit" class="btn btn-danger">Delete Page</button>
   </form>
 </div>
 {% endblock page_content %}

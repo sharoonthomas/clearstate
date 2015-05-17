@@ -126,15 +126,44 @@ class Component(SurrogatePK, Model):
 class Incident(SurrogatePK, Model):
     __tablename__ = 'page_incident'
 
+    types = [
+        'Investigating',
+        'Identified',
+        'Watching',
+        'Fixed',
+    ]
+
     title = Column(db.String(100), nullable=False)
+    type = Column(db.Enum(*types), nullable=False)
+    description = Column(db.Text(), nullable=False)
+
+    create_time = Column(
+        db.DateTime, nullable=False,
+        default=datetime.utcnow,
+    )
+    update_time = Column(
+        db.DateTime, nullable=False,
+        onupdate=datetime.utcnow,
+        default=datetime.utcnow,
+    )
+
     page_id = Column(db.ForeignKey('page.id'), nullable=False)
     page = relationship('Page', backref='incidents')
-    type = Column(
-        db.Enum(
-            'Investigating',
-            'Identified',
-            'Watching',
-            'Fixed',
-        ),
-        nullable=False
-    )
+
+    @property
+    def icon(self):
+        """
+        Based on incident type return a suitable icon
+        """
+        return {
+            'Investigating': 'fa-exclamation-triangle',
+            'Identified': 'fa-dot-circle-o',
+            'Watching': 'fa-eye',
+            'Fixed': 'fa-check-circle',
+        }[self.type]
+
+    @property
+    def date(self):
+        return max(
+            filter(None, [self.create_time, self.update_time])
+        ).date()

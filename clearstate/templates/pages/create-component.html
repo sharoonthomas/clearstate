@@ -1,7 +1,7 @@
 {% extends 'pages/components.html' %}
 
 {% block breadcrumb_title %}
-{{ super() }} &gt; Add Component
+{{ super() }} &gt; Add
 {% endblock breadcrumb_title %}
 
 
@@ -17,11 +17,11 @@
     {{ form.hidden_tag() }}
     <div class="form-group">
       {{form.name.label}}
-      {{form.name(placeholder="Web Server", class_="form-control")}}
+      {{form.name(placeholder="Ex. Web Server, API", class_="form-control")}}
     </div>
     <div class="form-group">
       {{form.description.label}}
-      {{form.description(placeholder="Serves website pages", class_="form-control")}}
+      {{form.description(placeholder="Ex. Serves website pages", class_="form-control")}}
     </div>
     <div class="form-group">
       {{form.group.label}}
