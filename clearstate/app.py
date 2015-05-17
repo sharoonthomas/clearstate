@@ -66,6 +66,3 @@ def register_errorhandlers(app):
 
 def register_before_handlers(app):
     return None
-
-
-
