@@ -126,29 +126,62 @@ class Component(SurrogatePK, Model):
 class Incident(SurrogatePK, Model):
     __tablename__ = 'page_incident'
 
-    types = [
-        'Investigating',
-        'Identified',
-        'Watching',
-        'Fixed',
-    ]
-
     title = Column(db.String(100), nullable=False)
-    type = Column(db.Enum(*types), nullable=False)
-    description = Column(db.Text(), nullable=False)
+
+    page_id = Column(db.ForeignKey('page.id'), nullable=False)
+    page = relationship('Page', backref='incidents')
 
     create_time = Column(
         db.DateTime, nullable=False,
         default=datetime.utcnow,
     )
-    update_time = Column(
-        db.DateTime, nullable=False,
-        onupdate=datetime.utcnow,
-        default=datetime.utcnow,
-    )
 
-    page_id = Column(db.ForeignKey('page.id'), nullable=False)
-    page = relationship('Page', backref='incidents')
+    @property
+    def message(self):
+        """
+        The message of the incident is the last message on the updates
+        """
+        if self.last_update:
+            return self.last_update.message
+
+    @property
+    def status(self):
+        """
+        Status of the most recent update
+        """
+        if self.last_update:
+            return self.last_update.status
+
+    @property
+    def last_update(self):
+        """
+        Return the most recent update on the incident.
+        """
+        return IncidentUpdate.query.filter(
+            IncidentUpdate.incident_id == self.id,
+        ).order_by(
+            IncidentUpdate.update_time.desc(),
+            IncidentUpdate.create_time.desc(),
+        ).first()
+
+    @property
+    def first_update(self):
+        """
+        Return the first update on the incident.
+        """
+        return IncidentUpdate.query.filter(
+            IncidentUpdate.incident_id == self.id,
+        ).order_by(IncidentUpdate.create_time.asc()).first()
+
+    @property
+    def update_time(self):
+        """
+        Return the last updated time based on the updates
+        """
+        return max(filter(None, [
+            self.last_update.create_time,
+            self.last_update.update_time,
+        ]))
 
     @property
     def icon(self):
@@ -160,10 +193,36 @@ class Incident(SurrogatePK, Model):
             'Identified': 'fa-dot-circle-o',
             'Watching': 'fa-eye',
             'Fixed': 'fa-check-circle',
-        }[self.type]
+        }[self.status]
 
     @property
     def date(self):
         return max(
             filter(None, [self.create_time, self.update_time])
         ).date()
+
+
+class IncidentUpdate(SurrogatePK, Model):
+    __tablename__ = 'page_incident_update'
+
+    statuses = [
+        'Investigating',
+        'Identified',
+        'Watching',
+        'Fixed',
+    ]
+    status = Column(db.Enum(*statuses), nullable=False)
+    message = Column(db.Text(), nullable=False)
+
+    incident_id = Column(db.ForeignKey('page_incident.id'), nullable=False)
+    incident = relationship('Incident', backref='updates')
+
+    create_time = Column(
+        db.DateTime, nullable=False,
+        default=datetime.utcnow,
+    )
+    update_time = Column(
+        db.DateTime, nullable=False,
+        onupdate=datetime.utcnow,
+        default=datetime.utcnow,
+    )

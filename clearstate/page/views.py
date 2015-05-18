@@ -4,9 +4,11 @@ from datetime import datetime
 from flask import Blueprint, render_template, redirect, url_for, request, flash
 from flask.ext.login import login_required
 
-from clearstate.page.models import Page, Component, ComponentGroup, Incident
+from clearstate.page.models import Page, Component, ComponentGroup, Incident, \
+    IncidentUpdate
 from clearstate.page.forms import PageForm, ComponentForm, \
-    ComponentGroupForm, IncidentForm, PageDeleteForm
+    ComponentGroupForm, IncidentForm, PageDeleteForm, EditIncidentForm, \
+    UpdateIncidentForm
 from clearstate.utils import flash_errors
 
 blueprint = Blueprint(
@@ -256,7 +258,7 @@ def add_component_group(page_id):
 
 
 @blueprint.route('/<int:page_id>/incidents')
-@blueprint.route('/<int:page_id>/incidents/<int:page_no>')
+@blueprint.route('/<int:page_id>/incidents/p<int:page_no>')
 @login_required
 def incidents(page_id, page_no=1):
     """
@@ -288,10 +290,19 @@ def add_incident(page_id):
     form = IncidentForm(request.form)
 
     if form.validate_on_submit():
-        incident = Incident()
-        form.populate_obj(incident)
-        incident.page_id = page_id
+        incident = Incident(
+            title=form.title.data,
+            page_id=page_id,
+        )
         incident.save()
+
+        update = IncidentUpdate(
+            incident_id=incident.id,
+            message=form.message.data,
+            status=form.status.data,
+        )
+        update.save()
+
         flash('Incident has been added to the status page', 'success')
         return redirect(
             url_for('pages.incidents', page_id=page_id)
@@ -304,24 +315,62 @@ def add_incident(page_id):
 
 
 @blueprint.route(
+    '/<int:page_id>/incidents/<int:incident_id>',
+    methods=['GET', 'POST'])
+def update_incident(page_id, incident_id):
+    """
+    Update an incident.
+    """
+    incident = Incident.get_by_id(incident_id)
+    page = incident.page
+
+    form = UpdateIncidentForm(request.form)
+
+    if form.validate_on_submit():
+        IncidentUpdate(
+            incident_id=incident.id,
+            status=form.status.data,
+            message=form.message.data,
+        ).save()
+
+        flash('Incident has been updated', 'success')
+        return redirect(
+            url_for(
+                'pages.update_incident',
+                page_id=page_id, incident_id=incident.id
+            )
+        )
+    else:
+        flash_errors(form)
+    return render_template(
+        'pages/incident.html',
+        page=page, incident=incident, form=form,
+    )
+
+
+@blueprint.route(
     '/<int:page_id>/incidents/<int:incident_id>/edit',
     methods=['GET', 'POST'])
 @login_required
 def edit_incident(page_id, incident_id):
     """
-    Allow editing incident
+    Allow editing incident. The only thing that can be edited is the title.
     """
     incident = Incident.get_by_id(incident_id)
     page = incident.page
 
-    form = IncidentForm(request.form, obj=incident)
+    form = EditIncidentForm(request.form, obj=incident)
 
     if form.validate_on_submit():
-        form.populate_obj(incident)
+        incident.title = form.title.data
         incident.save()
+
         flash('Incident has been updated', 'success')
         return redirect(
-            url_for('pages.incidents', page_id=page_id)
+            url_for(
+                'pages.update_incident',
+                page_id=page_id, incident_id=incident.id
+            )
         )
     else:
         flash_errors(form)

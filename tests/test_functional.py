@@ -119,3 +119,52 @@ class TestPage:
         res = form.submit().follow()
 
         assert Page.query.count() == 0
+
+
+class TestIncident:
+
+    def test_creation(self, user, page, testapp):
+        res = testapp.post(
+            '/login',
+            {
+                'email': user.email,
+                'password': 'myprecious',
+            }
+        )
+        add_incident_url = '/pages/%d/incidents/add' % page.id
+        res = testapp.get(add_incident_url)
+
+        # Fill the form up
+        form = res.forms['create-incident-form']
+        form['title'] = 'Build processing delayed'
+        form['status'] = 'Investigating'
+        form['message'] = 'A bad deploy is causing backups.....'
+        res = form.submit().follow()
+
+        assert page.incident_count == 1
+        incident, = page.incidents
+
+        assert len(incident.updates) == 1
+        assert incident.title == 'Build processing delayed'
+        assert incident.message == 'A bad deploy is causing backups.....'
+        assert incident.status == 'Investigating'
+
+        # Now post a status update
+        update_incident_url = '/pages/%d/incidents/%d' % (
+            page.id, incident.id
+        )
+        res = testapp.get(update_incident_url)
+
+        # Fill the form up
+        form = res.forms['update-incident-form']
+        form['status'] = 'Fixed'
+        form['message'] = 'The deploy has been reverted.'
+        res = form.submit().follow()
+
+        assert page.incident_count == 1
+        incident, = page.incidents
+
+        assert len(incident.updates) == 2
+        assert incident.title == 'Build processing delayed'
+        assert incident.message == 'The deploy has been reverted.'
+        assert incident.status == 'Fixed'

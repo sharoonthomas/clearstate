@@ -83,7 +83,13 @@
       </h4>
     </div>
     <div class="panel-body">
-      {{ incident.description }}
+      {% for update in updates|sort(reverse=True, attribute='create_time') %}
+        <p>
+          <b>{{ update.status }}</b>
+          {{ update.message }}
+          <small>{{ incident.create_time|datetimeformat('medium') }}</small>
+        </p>
+      {% endfor %}
     </div>
   </div>
 </div>  

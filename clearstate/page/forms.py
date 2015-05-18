@@ -3,7 +3,7 @@ from flask_wtf import Form
 from wtforms import TextField, SelectField, TextAreaField, RadioField
 from wtforms.validators import DataRequired, URL, Optional, ValidationError
 from wtforms.ext.sqlalchemy.fields import QuerySelectField
-from clearstate.page.models import timezones, Incident
+from clearstate.page.models import timezones, IncidentUpdate
 
 
 class PageForm(Form):
@@ -30,14 +30,23 @@ class ComponentGroupForm(Form):
     name = TextField('Name', validators=[DataRequired()])
 
 
-class IncidentForm(Form):
+class EditIncidentForm(Form):
     title = TextField('Title', validators=[DataRequired()])
+
+
+class UpdateIncidentForm(Form):
     # TODO: Replace with radio field that is more appropriate
-    type = SelectField(
-        'Type', choices=zip(Incident.types, Incident.types),
+    status = SelectField(
+        'Status', choices=zip(
+            IncidentUpdate.statuses, IncidentUpdate.statuses
+        ),
         validators=[DataRequired()]
     )
-    description = TextAreaField('Description', validators=[DataRequired()])
+    message = TextAreaField('Message', validators=[DataRequired()])
+
+
+class IncidentForm(EditIncidentForm, UpdateIncidentForm):
+    pass
 
 
 class PageDeleteForm(Form):

@@ -1,9 +1,10 @@
 # -*- coding: utf-8 -*-
+from factory import SubFactory
 from factory import Sequence, PostGenerationMethodCall
 from factory.alchemy import SQLAlchemyModelFactory
 
 from clearstate.user.models import User
-from clearstate.page.models import Page
+from clearstate.page.models import Page, Incident
 from clearstate.database import db
 
 
@@ -34,3 +35,12 @@ class PageFactory(BaseFactory):
 
     class Meta:
         model = Page
+
+
+class IncidentFactory(BaseFactory):
+
+    title = Sequence(lambda n: "Incident {0}".format(n))
+    page = SubFactory(PageFactory)
+
+    class Meta:
+        model = Incident

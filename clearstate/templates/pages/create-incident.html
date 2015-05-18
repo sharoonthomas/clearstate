@@ -11,8 +11,8 @@
 
 {% block page_content %}
 <div class="col-md-12">
-  <form id="create-component-form" 
-    class="form form-half-width form-clearstate center-block form-horizontal" 
+  <form id="create-incident-form" 
+    class="form form-clearstate " 
     method="POST" action="" role="form">
     {{ form.hidden_tag() }}
     <div class="form-group">
@@ -20,12 +20,12 @@
       {{form.title(placeholder="Ex. Reports of latency", class_="form-control")}}
     </div>
     <div class="form-group">
-      {{form.type.label}}
-      {{form.type(class_="form-control")}}
+      {{form.status.label}}
+      {{form.status(class_="form-control")}}
     </div>    
     <div class="form-group">
-      {{form.description.label}}
-      {{form.description(placeholder="Detailed explanation", class_="form-control")}}
+      {{form.message.label}}
+      {{form.message(placeholder="Message", class_="form-control")}}
     </div>
     <button type="submit" class="btn btn-success">Add Incident</button>
   </form>

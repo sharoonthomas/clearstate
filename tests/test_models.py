@@ -5,8 +5,8 @@ import datetime as dt
 import pytest
 
 from clearstate.user.models import User, Role
-from clearstate.page.models import Component
-from .factories import UserFactory, PageFactory
+from clearstate.page.models import Component, IncidentUpdate
+from .factories import UserFactory, PageFactory, IncidentFactory
 
 
 @pytest.mark.usefixtures('db')
@@ -84,3 +84,43 @@ class TestPage:
             component.save()
 
         assert page.component_count == 4
+
+
+@pytest.mark.usefixtures('db')
+class TestIncident:
+
+    def test_factory(self, db):
+        incident = IncidentFactory()
+        db.session.commit()
+
+        assert bool(incident.title)
+        assert bool(incident.page)
+
+        assert len(incident.updates) == 0
+
+    def test_message_and_state(self, db):
+        incident = IncidentFactory()
+        incident.save()
+
+        assert incident.message is None
+
+        update_1 = IncidentUpdate(
+            incident=incident,
+            message="Hello Broken World!",
+            status="Investigating",
+        )
+        update_1.save()
+
+        assert len(incident.updates) == 1
+        assert incident.message == "Hello Broken World!"
+        assert incident.status == "Investigating"
+
+        update_2 = IncidentUpdate(
+            incident=incident,
+            message="Fixed Broken World!",
+            status="Fixed",
+        )
+        update_2.save()
+
+        assert incident.message == "Fixed Broken World!"
+        assert incident.status == "Fixed"

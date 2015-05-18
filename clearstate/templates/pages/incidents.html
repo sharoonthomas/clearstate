@@ -9,7 +9,13 @@ Incidents
 {% block breadcrumbs %}
   {{ super() }}
   <li class="active">
+    {% if incident %}
+      <a href="{{ url_for('pages.incidents', page_id=page.id) }}">
+        Incidents
+      </a>
+    {% else %}
       <span>Incidents</span>
+    {% endif %}
   </li>
 {% endblock breadcrumbs %}
 
@@ -43,36 +49,41 @@ Incidents
     </h4> 
   </div>
   {% else %}
-    <div class="row">
-      <div class="col-md-12 incidents">
-        {% for incident in incidents.items %}
-          <div class="incident-block">
-            <div class="incident-icon">
-              <i class="fa {{ incident.icon }}"></i>
-            </div>
-            <div class="incident-content">
-              <div class="panel-heading">
-                <h4 class="panel-title font-slim">
-                  {{ incident.title }}
-                  <span class="pull-right">
-                    <small>{{ incident.create_time|datetimeformat('medium') }}</small>
-                  </span>
+  <div class="row">
+    <div class="col-md-12">
+      {% for incident in incidents.items %}
+        <h4 class="col-md-9 font-slim">
+          <a href="{{ url_for('pages.update_incident', page_id=page.id, incident_id=incident.id) }}"
+             class="heading-link">
+            {{ incident.title }}
+          </a>
+          <br/>
+          <small class="text-muted">
+            {% if incident.state != 'Fixed' %}
+              Last updated {# timeago. #} at {{ incident.update_time|datetimeformat('medium') }}
+            {% else %}
+              Resolved on {{ incident.update_time|datetimeformat('medium') }}
+            {% endif %}
+          </small>
+        </h4>
+        <div class="buttons col-md-3 pull-right">
+          {% if incident.state != 'Fixed' %}
+          <a class="btn btn-link" href="{{ url_for('pages.update_incident', page_id=page.id, incident_id=incident.id) }}">Update Incident</a>
+          {% endif %}
+      </div>
+      <hr/>
+      {% endfor %}
+    </div>
+  </div>
 
-                </h4>
-              </div>
-              <div class="panel-body">
-                {{ incident.description }}
-              </div>
-            </div>
-          </div>
-        {% endfor %}
-      </div>
+  {% if incidents.pages > 1 %}
+  <div class="row">
+    <div class="col-md-6 col-xs-12 pull-right">
+      {{ render_pagination(incidents, 'pages.incidents', page) }} 
     </div>
-    <div class="row">
-      <div class="col-md-6 col-xs-12 pull-right">
-        {{ render_pagination(incidents, 'pages.incidents', page) }} 
-      </div>
-    </div>
+  </div>
+  {% endif %}
+
   {% endif %}
 </div>
 {% endblock page_content %}

@@ -44,6 +44,12 @@ textarea {
   width: 50%;
 }
 
+
+label {
+    font-weight: normal;
+    font-size: 14px;
+}
+
 .form-half-width .form-control {
   position: relative;
   font-size: 16px;
@@ -138,6 +144,9 @@ ul.nav > li > a {
     background-repeat: no-repeat;
 }
 
+form.form-clearstate {
+  max-width: 600px;
+}
 form.form-clearstate input {
   outline: none !important;
   border-color: #e4e5e7 !important;
@@ -259,6 +268,10 @@ form.form-clearstate textarea:-ms-input-placeholder { color: #e4e5e7; }
     color: #6a6c6f;
     text-decoration: none;
 }
+.heading-link, .heading-link:hover {
+    text-decoration: none;
+    color: #555;
+}
 .component-name {
   color: #34495e;
   font-weight: 500;
@@ -332,4 +345,15 @@ form.form-clearstate textarea:-ms-input-placeholder { color: #e4e5e7; }
   height: 100%;
   width: 4px;
   background: #e3e8f0;
+}
+.status-investigating {
+}
+.status-identified {
+}
+.status-watching {
+}
+.status-fixed {
+}
+.text-muted {
+    color: #ccc;
 }
