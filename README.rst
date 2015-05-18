@@ -14,11 +14,13 @@ Features
 Coming Soon
 -----------
 
+* Subscription API
 * Multiple users
-* Public Metrics
+* Public Metrics API
 * Public Metrics (from Pingdom, Librato, NewRelic)
 * End-User Notifications
 * Embed API
+* Third party status
 
 Quickstart
 ----------
